@@ -14,6 +14,10 @@ then **npm start** on both
 
 # INSTALLING PACKAGES
 
-Install packages for Express in the root folder. Example: npm i express --save
-Install packages for React in the client folder. Example: npm i react-charts --save
+Install packages for Express in the root folder. Example: **npm i express --save**
 
+Install packages for React in the client folder. Example: **npm i react-charts --save**
+
+# Making changes
+
+Create a branch from the dev branch.
