@@ -1,9 +1,10 @@
 # Twiadastrom
 
-To start locally open two terminals
+To start locally open two terminals. 
 
-npm start on root 
+1st terminal in root
+2nd terminal in client
 
-Also, cd client
+npm i on both
 
-npm start 
+then npm start on both
