@@ -4,7 +4,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 
 
-export function Searchbar({Forms}) {
+export function Searchbar() {
     return(
         <Navbar className="bg-light justify-content-between">
             <Form inline>
