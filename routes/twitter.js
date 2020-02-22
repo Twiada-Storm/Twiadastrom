@@ -8,7 +8,7 @@ var T = new Twit(config);
 
 router.post('/tweetSearch', async function (req, res, next) {
     let searchQuery = req.body.searchTerm;
-    T.get('search/tweets', { q: searchQuery, count: 10 }, function(err, data, response) {
+    T.get('search/tweets', { q: searchQuery, count: 50 }, function(err, data, response) {
         res.send(data.statuses)
       })
 })

@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { TwitterTweetEmbed } from 'react-twitter-embed';
 
 export class TwitterSearch extends Component {
     state = {
@@ -6,6 +7,7 @@ export class TwitterSearch extends Component {
         responseToPost: '',
         search: '',
         twitterResponse: [],
+        twitterIds: []
     };
 
     callTwitter = async e => {
@@ -17,11 +19,16 @@ export class TwitterSearch extends Component {
           headers: { 'Content-Type': 'application/json'}});
         const body = await response.json();
         let resp = [];
+        let ids = [];
         body.map((tweet) =>
           resp.push(tweet.text)
         )
+        body.map((tweet) => 
+            ids.push(tweet.id_str)
+        )
         this.setState({
-          twitterResponse: [...resp]
+          twitterResponse: [...resp],
+          twitterIds: [...ids]
         })
       };
 
@@ -39,10 +46,19 @@ export class TwitterSearch extends Component {
                   <button type="submit">Search</button>
                 </form>
 
-                <div style={{ display: 'flex', flexDirection: 'column', alignContent: 'center'}}>
+                <div style={{ minHeight: '500px', border: '1px solid black', marginTop: '1%'}}></div>
+
+                <div style={{ display: 'grid', 
+                              justifyContent: 'center',
+                              gridTemplateColumns: 'repeat(auto-fit, 230px)', 
+                              gridAutoRows:'minmax(min-content, max-content)', 
+                              gridAutoFlow: 'dense'}}>
                     {
-                      this.state.twitterResponse.map((item, index) => {
-                        return (<p key={index}> {item}</p>)
+                      this.state.twitterIds.map((item, index) => {
+                        return (
+                            <div style={{ height: 'auto', width: '200px'}}>
+                                <TwitterTweetEmbed key={index} tweetId={item}/>
+                            </div>)
                       })
                     }
                 </div>
