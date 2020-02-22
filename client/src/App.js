@@ -1,24 +1,20 @@
-import React, {Component, useState} from 'react';
+import React, { Component } from 'react';
 import  'bootstrap/dist/css/bootstrap.min.css'
 import logo from './logo.svg';
 import './App.css';
-import Container from "react-bootstrap/Container";
-import {Searchbar} from "./Components/Searchbar";
-import Dropdown from './Components/Dropdown.js';
+// import Container from "react-bootstrap/Container";
+// import {Searchbar} from "./Components/Searchbar";
+// import Dropdown from './Components/Dropdown.js';
+import TwitterSearch from './Components/TwitterSearch';
 
 class App extends Component {
   state = {
-    response: '',
-    post: '',
-    responseToPost: '',
-    search: '',
-    apipost: '',
-    twitterResponse: [],
+    expressResponse: '',
   };
 
   componentDidMount() {
     this.callApi()
-      .then(res => this.setState({ response: res.express }))
+      .then(res => this.setState({ expressResponse: res.express }))
       .catch(err => console.log(err));
   }
 
@@ -29,87 +25,19 @@ class App extends Component {
     return body;
   };
 
-  handleSubmit = async e => {
-    e.preventDefault();
-    const url = '/api/world'
-    const response = await fetch(url, {
-      method: 'POST',
-      body: JSON.stringify({ post: this.state.post }),
-      headers: { 'Content-Type': 'application/json'}});
-    const body = await response.text();
-    // this.setState({ responseToPost: body });
-  };
-
-
-  callTwitter = async e => {
-    e.preventDefault();
-    const url = '/twitter/tweetSearch'
-    const response = await fetch(url, {
-      method: 'POST',
-      body: JSON.stringify({ post: this.state.search }),
-      headers: { 'Content-Type': 'application/json'}});
-    const body = await response.json();
-    let resp = [];
-    body.map((tweet) =>
-      resp.push(tweet.text)
-    )
-    this.setState({
-      twitterResponse: [...resp]
-    })
-
-
-  };
-
 render() {
     return (
       <div className="App">
         <header className="App-header">
+          <h1 className="Site-title">Twiada Storm</h1>
           <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
         </header>
-        <p>{this.state.response}</p>
-        <form onSubmit={this.handleSubmit}>
-          <p>
-            <strong>Post to Server:</strong>
-          </p>
-          <input
-            type="text"
-            value={this.state.post}
-            onChange={e => this.setState({ post: e.target.value })}
-          />
-          <button type="submit">Submit</button>
-        </form>
-        <p>RESPONSE TO POST SHOULD BE BELOW</p>
-        <p>{this.state.responseToPost}</p>
+        <p>{this.state.expressResponse}</p>
 
-        <form onSubmit={this.callTwitter}>
-          <p>
-            <strong>Twitter CAll:</strong>
-          </p>
-          <input
-            type="text"
-            value={this.state.apipost}
-            onChange={e => this.setState({ apipost: e.target.value })}
-          />
-          <button type="submit">CAll TWITTER API</button>
-        </form>
-        {
-          this.state.twitterResponse.map((item, index) => {
-            return (<p key={index}> {item}</p>)
-          })
-        }
-        <div></div>
-
+        <div>
+          <TwitterSearch />
+          
+        </div>
 
 
       </div>

@@ -10,7 +10,7 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 app.use('/twitter', twitterRouter)
 
 app.get('/api/hello', (req, res) => {
-    res.send({ express: 'Hello From Express YES I WORK' });
+    res.send({ express: 'Express is running.' });
   });
 
 app.post('/api/world', (req, res) => {
