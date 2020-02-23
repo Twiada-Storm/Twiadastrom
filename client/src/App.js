@@ -6,7 +6,6 @@ import './App.css';
 // import {Searchbar} from "./Components/Searchbar";
 // import Dropdown from './Components/Dropdown.js';
 import TwitterSearch from './Components/TwitterSearch';
-
 class App extends Component {
   state = {
     expressResponse: '',
@@ -27,18 +26,19 @@ class App extends Component {
 
 render() {
     return (
-      <div className="App">
+      //main site container/div
+      <div className="App"> 
+
         <header className="App-header">
           <h1 className="Site-title">Twiada Storm</h1>
           <img src={logo} className="App-logo" alt="logo" />
         </header>
+
         <p>{this.state.expressResponse}</p>
 
         <div>
           <TwitterSearch />
-          
         </div>
-
 
       </div>
     );
