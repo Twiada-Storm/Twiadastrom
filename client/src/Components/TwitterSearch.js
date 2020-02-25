@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { TwitterTweetEmbed } from 'react-twitter-embed';
+import Masonry from 'react-masonry-css'
+import './Masonry.css'
 
 export class TwitterSearch extends Component {
     state = {
@@ -32,6 +34,13 @@ export class TwitterSearch extends Component {
         })
       };
 
+      breakpointColumnsObj = {
+        default: 4,
+        1100: 3,
+        700: 2,
+        500: 1
+      };
+
 
     render() {
         return (
@@ -48,19 +57,21 @@ export class TwitterSearch extends Component {
 
                 <div style={{ minHeight: '500px', border: '1px solid black', marginTop: '1%'}}></div>
 
-                <div style={{ display: 'grid', 
-                              justifyContent: 'center',
-                              gridTemplateColumns: 'repeat(auto-fit, 230px)', 
-                              gridAutoRows:'minmax(min-content, max-content)', 
-                              gridAutoFlow: 'dense'}}>
-                    {
-                      this.state.twitterIds.map((item, index) => {
-                        return (
-                            <div style={{ height: 'auto', width: '200px'}}>
-                                <TwitterTweetEmbed key={index} tweetId={item}/>
-                            </div>)
-                      })
-                    }
+                <div >
+                              <Masonry
+                                breakpointCols={this.breakpointColumnsObj}
+                                className="my-masonry-grid"
+                                columnClassName="my-masonry-grid_column"
+                              >
+                                {
+                                  this.state.twitterIds.map((item, index) => {
+                                    return (
+                                            <TwitterTweetEmbed key={index} tweetId={item}/>
+                                        )
+                                  })
+                                }
+                              </Masonry>
+                    
                 </div>
                 
             </div>
