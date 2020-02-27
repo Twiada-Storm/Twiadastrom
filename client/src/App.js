@@ -4,7 +4,7 @@ import logo from './logo.svg';
 import './App.css';
 // import Container from "react-bootstrap/Container";
 // import {Searchbar} from "./Components/Searchbar";
-// import Dropdown from './Components/Dropdown.js';
+import Dropdown from './Components/Dropdown.js';
 import TwitterSearch from './Components/TwitterSearch';
 class App extends Component {
   state = {
@@ -27,7 +27,7 @@ class App extends Component {
 render() {
     return (
       //main site container/div
-      <div className="App"> 
+      <div className="App">
 
         <header className="App-header">
           <h1 className="Site-title">Twiada Storm</h1>
@@ -37,7 +37,9 @@ render() {
         <p>{this.state.expressResponse}</p>
 
         <div>
+          <Dropdown />
           <TwitterSearch />
+
         </div>
 
       </div>

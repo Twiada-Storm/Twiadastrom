@@ -5,3 +5,8 @@ export const dropDownOptions = [
   { value: 'map', label: 'Map' }
 
 ];
+
+export const aboutOrFromOptions = [
+  { value: 'about', label: 'About' },
+  { value: 'from', label: 'From' }
+];

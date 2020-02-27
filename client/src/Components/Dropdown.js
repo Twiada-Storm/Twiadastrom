@@ -7,9 +7,16 @@ import { dropDownOptions } from './data.js';
 
 const animatedComponents = makeAnimated();
 
+/*const customStyle = {
+  control: () => ({
+    width: 100
+  })
+}*/
+
 export default function Dropdown() {
   return (
     <Select
+      //styles={customStyle}
       closeMenuOnSelect={false}
       components={animatedComponents}
       isMulti
