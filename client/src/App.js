@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import  'bootstrap/dist/css/bootstrap.min.css'
 import logo from './logo.svg';
 import './App.css';
+import Dropdown from './Components/Dropdown.js';
 // import Container from "react-bootstrap/Container";
 // import {Searchbar} from "./Components/Searchbar";
 // import Dropdown from './Components/Dropdown.js';
 
 import TwitterSearch from './Components/TwitterSearch';
+
 class App extends Component {
   state = {
     expressResponse: '',
@@ -28,7 +30,7 @@ class App extends Component {
 render() {
     return (
       //main site container/div
-      <div className="App"> 
+      <div className="App">
 
         <header className="App-header">
           <h1 className="Site-title">Twiada Storm</h1>
@@ -38,7 +40,9 @@ render() {
         <p>{this.state.expressResponse}</p>
 
         <div>
+          <Dropdown />
           <TwitterSearch />
+
         </div>
 
       </div>
