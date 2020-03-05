@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 import { TwitterTweetEmbed } from 'react-twitter-embed';
+import Masonry from 'react-masonry-css'
+import './Masonry.css'
+import TweetTopicLineChart from './TweetTopicCountLineChart';
+import TweetSentimentBarChart from './TweetSentimentBarChart';
+import TweetMasonry from './TweetMasonry';
 
 export class TwitterSearch extends Component {
     state = {
@@ -7,11 +12,20 @@ export class TwitterSearch extends Component {
         responseToPost: '',
         search: '',
         twitterResponse: [],
-        twitterIds: []
+        twitterIds: [],
+        sevenDays: [],
+        sentiments: []
     };
+    
+    callAll = async e => {
+      e.preventDefault();
+      await this.callTwitter();
+      await this.callSevenDays();
+      await this.callSentiment();
+    }
 
     callTwitter = async e => {
-        e.preventDefault();
+        // e.preventDefault();
         const url = '/twitter/tweetSearch'
         const response = await fetch(url, {
           method: 'POST',
@@ -28,15 +42,53 @@ export class TwitterSearch extends Component {
         )
         this.setState({
           twitterResponse: [...resp],
-          twitterIds: [...ids]
+          twitterIds: [...ids],
+          // searchTerm: ''
         })
       };
 
+      callSevenDays = async e => {
+        // e.preventDefault();
+        const url = '/twitter/lastSevenDays'
+        const response = await fetch(url, {
+          method: 'POST',
+          body: JSON.stringify({ searchTerm: this.state.searchTerm }),
+          headers: { 'Content-Type': 'application/json'}});
+        const body = await response.json();
+        let dates = []
+        body.map((tweet) => {
+          dates.push(tweet)
+        })
+        this.setState ({
+          sevenDays: [...dates],
+          // searchTerm: ''
+        })
+      };
+
+      callSentiment = async e => {
+        // e.preventDefault();
+        const url = '/twitter/sentiment'
+        const response = await fetch(url, {
+          method: 'POST',
+          body: JSON.stringify({ searchTerm: this.state.searchTerm }),
+          headers: { 'Content-Type': 'application/json'}});
+        const body = await response.json();
+        let scores = []
+        body.map((score) => {
+          scores.push(score)
+        })
+        scores.sort()
+        this.setState({
+          sentiments: [...scores],
+          searchTerm: '',
+
+        })
+      };
 
     render() {
         return (
             <div style={{ display: 'flex',flexDirection: 'column'}}>
-                <form onSubmit={this.callTwitter} style={{ display: 'flex', justifyContent:'flex-end', marginRight: '2%'}}>
+                <form onSubmit={this.callAll} style={{ display: 'flex', justifyContent:'flex-end', marginRight: '2%'}}>
                   <input
                     type="text"
                     placeholder="Tweet Subject"
@@ -45,22 +97,15 @@ export class TwitterSearch extends Component {
                   />
                   <button type="submit">Search</button>
                 </form>
+                
+              
+                <div style={{ minHeight: '500px', border: '1px solid black', marginTop: '1%', display: 'flex', flexDirection: 'row'}}>
+                    <TweetTopicLineChart data={this.state.sevenDays}/>
+                    <TweetSentimentBarChart data={this.state.sentiments}/>
+                </div>
 
-                <div style={{ minHeight: '500px', border: '1px solid black', marginTop: '1%'}}></div>
-
-                <div style={{ display: 'grid', 
-                              justifyContent: 'center',
-                              gridTemplateColumns: 'repeat(auto-fit, 230px)', 
-                              gridAutoRows:'minmax(min-content, max-content)', 
-                              gridAutoFlow: 'dense'}}>
-                    {
-                      this.state.twitterIds.map((item, index) => {
-                        return (
-                            <div style={{ height: 'auto', width: '200px'}}>
-                                <TwitterTweetEmbed key={index} tweetId={item}/>
-                            </div>)
-                      })
-                    }
+                <div >
+                  <TweetMasonry data={this.state.twitterIds}/>
                 </div>
                 
             </div>
