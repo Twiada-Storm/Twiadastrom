@@ -5,6 +5,7 @@ import './Masonry.css'
 import TweetTopicLineChart from './TweetTopicCountLineChart';
 import TweetSentimentBarChart from './TweetSentimentBarChart';
 import TweetMasonry from './TweetMasonry';
+import Button from "react-bootstrap/Button";
 
 export class TwitterSearch extends Component {
     state = {
@@ -16,7 +17,7 @@ export class TwitterSearch extends Component {
         sevenDays: [],
         sentiments: []
     };
-    
+
     callAll = async e => {
       e.preventDefault();
       await this.callTwitter();
@@ -37,7 +38,7 @@ export class TwitterSearch extends Component {
         body.map((tweet) =>
           resp.push(tweet.text)
         )
-        body.map((tweet) => 
+        body.map((tweet) =>
             ids.push(tweet.id_str)
         )
         this.setState({
@@ -88,17 +89,18 @@ export class TwitterSearch extends Component {
     render() {
         return (
             <div style={{ display: 'flex',flexDirection: 'column'}}>
-                <form onSubmit={this.callAll} style={{ display: 'flex', justifyContent:'flex-end', marginRight: '2%'}}>
+                <formControl onSubmit={this.callAll} style={{ display: 'flex', justifyContent:'flex-end', marginRight: '2%'}}>
                   <input
+                    class = "searchBar"
                     type="text"
                     placeholder="Tweet Subject"
                     value={this.state.searchTerm}
                     onChange={e => this.setState({ searchTerm: e.target.value })}
                   />
-                  <button type="submit">Search</button>
-                </form>
-                
-              
+                  <Button variant="outline-secondary" type="submit">Search</Button>
+                </formControl>
+
+
                 <div style={{ minHeight: '500px', border: '1px solid black', marginTop: '1%', display: 'flex', flexDirection: 'row'}}>
                     <TweetTopicLineChart data={this.state.sevenDays}/>
                     <TweetSentimentBarChart data={this.state.sentiments}/>
@@ -107,7 +109,7 @@ export class TwitterSearch extends Component {
                 <div >
                   <TweetMasonry data={this.state.twitterIds}/>
                 </div>
-                
+
             </div>
         )
     }
