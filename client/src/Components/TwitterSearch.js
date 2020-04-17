@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { TwitterTweetEmbed } from 'react-twitter-embed';
-import Masonry from 'react-masonry-css'
 import './Masonry.css'
 import TweetTopicLineChart from './TweetTopicCountLineChart';
 import TweetSentimentBarChart from './TweetSentimentBarChart';
 import TweetMasonry from './TweetMasonry';
 import Button from "react-bootstrap/Button";
+import SentimentGrid from './SentimentGrid';
+import FullScreenDialog from './Conditional';
 
 export class TwitterSearch extends Component {
     state = {
@@ -15,7 +15,8 @@ export class TwitterSearch extends Component {
         twitterResponse: [],
         twitterIds: [],
         sevenDays: [],
-        sentiments: []
+        sentiments: [],
+        show: false
     };
 
     callAll = async e => {
@@ -86,31 +87,40 @@ export class TwitterSearch extends Component {
         })
       };
 
+      toggleGrid(){
+        console.log(this.state.show)
+        this.state.show = !this.state.show
+        console.log(this.state.show)
+      }
+
+
     render() {
         return (
-            <div style={{ display: 'flex',flexDirection: 'column'}}>
-                <formControl onSubmit={this.callAll} style={{ display: 'flex', justifyContent:'flex-end', marginRight: '2%'}}>
-                  <input
-                    class = "searchBar"
-                    type="text"
-                    placeholder="Tweet Subject"
-                    value={this.state.searchTerm}
-                    onChange={e => this.setState({ searchTerm: e.target.value })}
-                  />
-                  <Button variant="outline-secondary" type="submit">Search</Button>
-                </formControl>
+          <div style={{ display: 'flex',flexDirection: 'column'}}>
+              <form onSubmit={this.callAll} style={{ display: 'flex', justifyContent:'flex-end', marginRight: '2%'}}>
+                <input
+                  type="text"
+                  placeholder="Tweet Subject"
+                  value={this.state.searchTerm}
+                  onChange={e => this.setState({ searchTerm: e.target.value })}
+                />
+                <button type="submit">Search</button>
+              </form>
 
 
-                <div style={{ minHeight: '500px', border: '1px solid black', marginTop: '1%', display: 'flex', flexDirection: 'row'}}>
-                    <TweetTopicLineChart data={this.state.sevenDays}/>
-                    <TweetSentimentBarChart data={this.state.sentiments}/>
-                </div>
+              <div style={{ minHeight: '500px', border: '1px solid black', marginTop: '1%', display: 'flex', flexDirection: 'row'}}>
+                  <TweetTopicLineChart data={this.state.sevenDays}/>
+                  <div>
+                      <TweetSentimentBarChart data={this.state.sentiments}/>
+                      <FullScreenDialog />
+                  </div>
+                  
+              </div>
 
-                <div >
-                  <TweetMasonry data={this.state.twitterIds}/>
-                </div>
-
-            </div>
+              <div>
+              <TweetMasonry data={this.state.twitterIds}/>
+              </div>  
+      </div>
         )
     }
 }
