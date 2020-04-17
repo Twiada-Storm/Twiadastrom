@@ -23,6 +23,7 @@ export class TweetMasonry extends Component {
 
         return (
             <div>
+              
                 <Masonry
                                 breakpointCols={this.breakpointColumnsObj}
                                 className="my-masonry-grid"
