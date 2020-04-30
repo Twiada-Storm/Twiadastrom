@@ -16,6 +16,7 @@ export class TwitterSearch extends Component {
         twitterIds: [],
         sevenDays: [],
         sentiments: [],
+        analysis : [],
         show: false
     };
 
@@ -24,6 +25,7 @@ export class TwitterSearch extends Component {
       await this.callTwitter();
       await this.callSevenDays();
       await this.callSentiment();
+      await this.callSentimentAnalysis();
     }
 
     callTwitter = async e => {
@@ -82,6 +84,26 @@ export class TwitterSearch extends Component {
         scores.sort()
         this.setState({
           sentiments: [...scores],
+          // searchTerm: '',
+
+        })
+      };
+
+      callSentimentAnalysis = async e => {
+        // e.preventDefault();
+        const url = '/twitter/sentimentAnalysis'
+        const response = await fetch(url, {
+          method: 'POST',
+          body: JSON.stringify({ searchTerm: this.state.searchTerm }),
+          headers: { 'Content-Type': 'application/json'}});
+        const body = await response.json();
+        let analysis = []
+        body.map((result) => {
+          analysis.push(result)
+        })
+
+        this.setState({
+          analysis: [...analysis],
           searchTerm: '',
 
         })
@@ -112,7 +134,7 @@ export class TwitterSearch extends Component {
                   <TweetTopicLineChart data={this.state.sevenDays}/>
                   <div>
                       <TweetSentimentBarChart data={this.state.sentiments}/>
-                      <FullScreenDialog />
+                      <FullScreenDialog data={this.state.analysis}/>
                   </div>
                   
               </div>
