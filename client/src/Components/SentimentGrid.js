@@ -26,11 +26,12 @@ export class SentimentGrid extends Component {
     };
 
     render() {
-        // const { data } = this.props;
+        const { data } = this.props;
+        console.log('DATA IN SENTIMENT GRID', data)
         return (
             <div>
                                 {
-                                  this.state.test.map((item, index) => {
+                                  data.map((item, index) => {
                                     return (
 
                                         <article style={{ 
@@ -48,7 +49,7 @@ export class SentimentGrid extends Component {
                                         }}>
                                         <div style={{ float: 'left', width: '39%'}}>
                                           {/* <img src="{{=imgSrc}}" /> */}
-                                          <p> Testing tweet body goes here
+                                          <p> {item.text}
                                             {/* <a href="{{=tweetLink}}" target="_blank">Link</a> */}
                                           </p>
                                         </div>
@@ -56,31 +57,31 @@ export class SentimentGrid extends Component {
                                           <table style={{ width: '100%', border: '1px solid'}}>
                                             <tr style={{ border: '1px solid'}}>
                                               <td style={{ border: '1px solid'}}>Score</td>
-                                              <td style={{ border: '1px solid'}}>80</td>
+                                              <td style={{ border: '1px solid'}}>{item.score}</td>
                                             </tr>
                                             <tr style={{ border: '1px solid'}}>
                                               <td style={{ border: '1px solid'}}>Comparative</td>
-                                              <td style={{ border: '1px solid'}}> 0.285234234928342 </td>
+                                              <td style={{ border: '1px solid'}}> {item.comparative} </td>
                                             </tr>
                                             <tr style={{ border: '1px solid'}}>
                                               <td style={{ border: '1px solid'}}>Favorited</td>
-                                              <td style={{ border: '1px solid'}}> 0 </td>
+                                              <td style={{ border: '1px solid'}}> {item.favorited} </td>
                                             </tr>
                                             <tr style={{ border: '1px solid'}}>
                                               <td style={{ border: '1px solid'}}>Retweeted</td>
-                                              <td style={{ border: '1px solid'}}> 14 </td>
+                                              <td style={{ border: '1px solid'}}> {item.retweeted} </td>
                                             </tr>
                                             <tr style={{ border: '1px solid'}}>
                                               <td style={{ border: '1px solid'}}>Words Matched</td>
-                                              <td style={{ border: '1px solid'}}> awesome </td>
+                                              <td style={{ border: '1px solid'}}> {item.words.join(',')} </td>
                                             </tr>
                                             <tr style={{ border: '1px solid'}}>
                                               <td style={{ border: '1px solid'}}>Positive Words</td>
-                                              <td style={{ border: '1px solid'}}> awesome </td>
+                                              <td style={{ border: '1px solid'}}> {item.positive.join(',')} </td>
                                             </tr>
                                             <tr style={{ border: '1px solid'}}>
                                               <td style={{ border: '1px solid'}}>Negative Words</td>
-                                              <td style={{ border: '1px solid'}}> sad </td>
+                                              <td style={{ border: '1px solid'}}> {item.negative.join(',')} </td>
                                             </tr >
                                           </table>
                                         </div>

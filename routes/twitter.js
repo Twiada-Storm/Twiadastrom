@@ -72,6 +72,23 @@ router.post('/sentiment', async function (req, res, next) {
     })
 })
 
+router.post('/sentimentAnalysis', async function (req, res, next) {
+  let searchQuery = req.body.searchTerm;
+  T.get('search/tweets', { q: searchQuery, count: 100 }, function(err, data, response) {
+    let tweets = data.statuses;
+    let arr = [];
+
+    for(var i = 0; i < tweets.length; i++){
+      var result = sentiment.analyze(tweets[i].text);
+      result.text = tweets[i].text
+      result.retweeted = tweets[i].retweet_count;
+      result.favorited = tweets[i].favorite_count;
+      arr.push(result)
+    }
+      res.send(arr)
+    })
+})
+
 
 
 
