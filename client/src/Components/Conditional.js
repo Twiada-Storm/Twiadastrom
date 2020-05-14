@@ -55,8 +55,8 @@ export default function FullScreenDialog(props) {
   return (
     <div>
     <ThemeProvider theme={theme}>
-      <Button variant="contained" color="secondary" onClick={handleClickOpen}>
-        More Sentiment Information
+      <Button variant="outlined" color="secondary" onClick={handleClickOpen} size="small">
+        Expanded Sentiment Information
       </Button>
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
         <AppBar className={classes.appBar}>
