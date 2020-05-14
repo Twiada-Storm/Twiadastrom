@@ -5,7 +5,7 @@ export class TweetSentimentBarChart extends Component {
     constructor(props){
         super(props)
         this.state = {
-
+        
         }
     }
 
