@@ -3,9 +3,12 @@ import './Masonry.css'
 import TweetTopicLineChart from './TweetTopicCountLineChart';
 import TweetSentimentBarChart from './TweetSentimentBarChart';
 import TweetMasonry from './TweetMasonry';
+//import Button from '@material-ui/core/Button';
 import Button from "react-bootstrap/Button";
 import SentimentGrid from './SentimentGrid';
 import FullScreenDialog from './Conditional';
+
+import CheckboxLabels from './VisualOptions.js';
 
 export class TwitterSearch extends Component {
     state = {
@@ -17,11 +20,15 @@ export class TwitterSearch extends Component {
         sevenDays: [],
         sentiments: [],
         analysis : [],
-        show: false
+        show: false,
+        prevSearch : ''
     };
 
     callAll = async e => {
       e.preventDefault();
+      this.setState({
+        prevSearch: this.state.searchTerm
+      })
       await this.callTwitter();
       await this.callSevenDays();
       await this.callSentiment();
@@ -115,33 +122,39 @@ export class TwitterSearch extends Component {
         console.log(this.state.show)
       }
 
+      clearEverything(){
+        window.location.reload();
+      }
+
+
+
 
     render() {
         return (
           <div style={{ display: 'flex',flexDirection: 'column'}}>
-              <form onSubmit={this.callAll} style={{ display: 'flex', justifyContent:'flex-end', marginRight: '2%'}}>
-                <input
-                  type="text"
-                  placeholder="Tweet Subject"
-                  value={this.state.searchTerm}
-                  onChange={e => this.setState({ searchTerm: e.target.value })}
-                />
-                <button type="submit">Search</button>
+            <form onSubmit={this.callAll} style={{ display: 'flex', justifyContent:'center', marginRight: '2%'}}>
+              <input
+                type="text"
+                placeholder="Tweet Subject"
+                value={this.state.searchTerm}
+                onChange={e => this.setState({ searchTerm: e.target.value })} />
+              <button type="submit">Search</button>
+              <button style={{ marginLeft: '2%'}} onClick={this.clearEverything}>Clear Search</button>
               </form>
+              <div style={{display: 'flex', flexDirection: 'row-reverse', justifyContent: 'space-evenly', marginLeft: '26%'}}>
+                <FullScreenDialog data={this.state.analysis}/>
+                <CheckboxLabels />
+                <h2>{this.state.prevSearch}</h2>
+              </div>
 
-
-              <div style={{ minHeight: '500px', border: '1px solid black', marginTop: '1%', display: 'flex', flexDirection: 'row'}}>
+              <div style={{ minHeight: '500px', marginTop: '1%', display: 'flex', flexDirection: 'row'}}>
                   <TweetTopicLineChart data={this.state.sevenDays}/>
-                  <div>
-                      <TweetSentimentBarChart data={this.state.sentiments}/>
-                      <FullScreenDialog data={this.state.analysis}/>
-                  </div>
-                  
+                  <TweetSentimentBarChart data={this.state.sentiments}/>
               </div>
 
               <div>
               <TweetMasonry data={this.state.twitterIds}/>
-              </div>  
+              </div>
       </div>
         )
     }

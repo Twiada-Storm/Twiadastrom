@@ -5,12 +5,12 @@ export class TweetTopicCountLineChart extends Component {
     constructor(props){
         super(props)
         this.state = {
-
+    
         }
     }
-    
+
     render() {
-        const { data } = this.props; 
+        const { data } = this.props;
         data.reverse()
         return (
             <div style={{ margin: '1%'}}>
