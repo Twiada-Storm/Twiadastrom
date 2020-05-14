@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import  'bootstrap/dist/css/bootstrap.min.css'
-import logo from './logo.svg';
 import './App.css';
-import Dropdown from './Components/Dropdown.js';
+import DenseAppBar from './Components/AppBar.js';
 // import Container from "react-bootstrap/Container";
 // import {Searchbar} from "./Components/Searchbar";
-// import Dropdown from './Components/Dropdown.js';
 
 import TwitterSearch from './Components/TwitterSearch';
 
@@ -32,15 +30,12 @@ render() {
       //main site container/div
       <div className="App">
 
-        <header className="App-header">
-          <h1 className="Site-title">Twiada Storm</h1>
-          <img src={logo} className="App-logo" alt="logo" />
-        </header>
+        <DenseAppBar />
 
         <p>{this.state.expressResponse}</p>
 
         <div>
-          <Dropdown />
+
           <TwitterSearch />
 
         </div>
