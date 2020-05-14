@@ -20,11 +20,15 @@ export class TwitterSearch extends Component {
         sevenDays: [],
         sentiments: [],
         analysis : [],
-        show: false
+        show: false,
+        prevSearch : ''
     };
 
     callAll = async e => {
       e.preventDefault();
+      this.setState({
+        prevSearch: this.state.searchTerm
+      })
       await this.callTwitter();
       await this.callSevenDays();
       await this.callSentiment();
@@ -118,6 +122,10 @@ export class TwitterSearch extends Component {
         console.log(this.state.show)
       }
 
+      clearEverything(){
+        window.location.reload();
+      }
+
 
 
 
@@ -131,10 +139,12 @@ export class TwitterSearch extends Component {
                 value={this.state.searchTerm}
                 onChange={e => this.setState({ searchTerm: e.target.value })} />
               <button type="submit">Search</button>
+              <button style={{ marginLeft: '2%'}} onClick={this.clearEverything}>Clear Search</button>
               </form>
               <div style={{display: 'flex', flexDirection: 'row-reverse', justifyContent: 'space-evenly', marginLeft: '26%'}}>
                 <FullScreenDialog data={this.state.analysis}/>
                 <CheckboxLabels />
+                <h2>{this.state.prevSearch}</h2>
               </div>
 
               <div style={{ minHeight: '500px', marginTop: '1%', display: 'flex', flexDirection: 'row'}}>
